@@ -1,6 +1,8 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class UsernameInfo {
@@ -14,11 +16,10 @@ public class UsernameInfo {
 			System.out.println("Enter Username");
 			Scanner sc = new Scanner(System.in);
 			String username = sc.next();
-			FileWriter fw = new FileWriter("ListOfUsernames.txt");
-			fw.write(username);
+			FileWriter fw = new FileWriter("ListOfUsernames.txt", true);
+			fw.write(username + "\n");
 			fw.close();
 		} catch (IOException e) {
-			System.out.println("File not Found.");
 		}
 	}
 }

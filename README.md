@@ -5,11 +5,7 @@
 # We are the Software Guys for EZPZ Finances
 
 # Currently Working on:
-
-# Jonathan: Adding passwords to login process, checking to see if login information is correct
-
-# Justin: Organizing program to have different types of transactions.
-
-# Berk: Designing database constraints and ERD's
-
-# Noah: Designing database constraints and ERD's
+Jonathan: Creating interface for login information
+Justin: Creating a website for our database
+Berk: Establishing database connection and template; learning how to connect database to java
+Noah: Designing ERD and classes; establishing constraints within classes

@@ -38,7 +38,8 @@ public class UsernameInfo {
 			map.keySet().toArray(usernames);
 			
 			for (int i = 0; i < size; i++) { 
-				fw.write(usernames[i] + " " + passwords[i] + "\n");
+				fw.write(usernames[i] + " " + passwords[i]);
+				fw.write("\n");
 			}
 			fw.close();
 		} catch (IOException e) {
@@ -68,6 +69,7 @@ public class UsernameInfo {
 			Scanner sc = new Scanner(file);
 			while (sc.hasNextLine()) {
 				hm.put(sc.next(), sc.next());
+				sc.nextLine();
 			}
 			sc.close();
 		} catch (FileNotFoundException e) {

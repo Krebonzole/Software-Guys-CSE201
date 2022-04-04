@@ -42,7 +42,7 @@ public class DatabaseConnector {
 	    int accId = rs.getInt("accountID");
 	    con.close();
 	    int choice = 0;
-	    while (choice != 4) {
+	    while (choice != 6) {
 	    	choice = menu();
 	    	if (choice == 1)
 	    		checkBalance(accId);
@@ -50,7 +50,11 @@ public class DatabaseConnector {
 	    		createBalance(accId);
 	    	} else if (choice == 3) {
 	    		makeTransaction(accId);
-	    	} 
+	    	} else if (choice == 4) {
+	    		makeBusiness(accId);
+	    	} else if (choice == 5) {
+	    		linkToBusiness(accId);
+	    	}
 	    		
 	    	
 	    }
@@ -58,13 +62,62 @@ public class DatabaseConnector {
 	    
 	}
 	
+	private static void linkToBusiness(int accId) throws SQLException {
+		// TODO Auto-generated method stub
+		Scanner in = new Scanner(System.in);
+		Connection con;
+		con = DriverManager.getConnection(
+                "jdbc:mysql://127.0.0.1:3306/CSE201PROJECT?prop1",
+                username,
+                password);
+		
+		PreparedStatement upd = con.prepareStatement("blah blah blah",ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+		String sql1 = "UPDATE Balances SET BusinessID = %d WHERE purpose = '%s' AND accountID = %d";
+		String sql2 = "SELECT businessID FROM Business WHERE name = '%s' AND accountID = %d";
+		System.out.println("What Balance would you like to link?");
+		String purp = in.nextLine();
+		System.out.println("What Business would you like to link to this business?");
+		String bus = in.nextLine();
+		int bId = 0;
+		sql2 = String.format(sql2, bus, accId);
+		ResultSet rs  = upd.executeQuery(sql2);
+		if(!(rs.next())) {
+	    	System.out.print("no business found with that name");
+	    	return;
+	    } else {
+	    	bId = rs.getInt("businessID");
+	    }
+		sql1 = String.format(sql1, bId, purp, accId);
+		upd.executeUpdate(sql1);
+		
+	}
+
+	private static void makeBusiness(int accId) throws SQLException {
+		// TODO Auto-generated method stub
+		Scanner in = new Scanner(System.in);
+		Connection con;
+		con = DriverManager.getConnection(
+                "jdbc:mysql://127.0.0.1:3306/CSE201PROJECT?prop1",
+                username,
+                password);
+		Statement upd = con.createStatement();
+		String sql = "INSERT INTO Business (accountID, name) VALUES (%d, '%s');";
+		System.out.println("What would you like to name this business?");
+		String bName = in.nextLine();
+		sql = String.format(sql, accId, bName);
+		upd.executeUpdate(sql);
+		
+	}
+
 	public static int menu() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("What would you like to do?");
 		System.out.println("1. Check Account Balances");
 		System.out.println("2. Create new Balance");
 		System.out.println("3. Make Transaction");
-		System.out.println("4. Exit");
+		System.out.println("4. Make Business");
+		System.out.println("5. Link Balance to Business");
+		System.out.println("6. Exit");
 		int ret = in.nextInt();
 		return ret;
 	}
@@ -118,7 +171,7 @@ public class DatabaseConnector {
 		                     password);
 		//TODO Auto-generated catch block
 		Statement upd = con.createStatement();
-    	String sql1 = " INSERT INTO Transactions (accountID, balanceID, purpose, netChange) VALUES (%d, %d, '%s', %f)";
+    	String sql1 = "INSERT INTO Transactions (accountID, balanceID, purpose, netChange) VALUES (%d, %d, '%s', %f)";
     	String sql2 = "Select money, balanceID FROM Balances WHERE purpose = '%s' and accountID = %d";
     	System.out.println("what balance is this transaction for?");
     	String balanceName = in.next();

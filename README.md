@@ -4,12 +4,6 @@
 
 # We are the Software Guys for EZPZ Finances
 
-# Currently Working on:
+# This project is designed to help people to manage finances connected to companies or for personal reasons.
 
-# Jonathan: Creating interface for login information
-
-# Justin: Creating a website for our database
-
-# Berk: Establishing database connection and template; learning how to connect database to java
-
-# Noah: Designing ERD and classes; establishing constraints within classes
+# Software used is java and JDBC as well as a database in mysql

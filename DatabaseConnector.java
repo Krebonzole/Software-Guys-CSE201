@@ -15,7 +15,8 @@ public class DatabaseConnector {
 		con = DriverManager.getConnection(
 			                     "jdbc:mysql://127.0.0.1:3306/CSE201PROJECT?prop1",
 			                     username,
-			                     password);
+			                     password); // This part has to be done every method where an sql query is because
+											// it disconnects when coming back to the menu prompt.
 			// TODO Auto-generated catch block
 		PreparedStatement prestat=con.prepareStatement("blah blah blah",ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		System.out.print("Login in or Create Account? (Enter C for Creating Account, Press Any Key to Login)");
@@ -68,8 +69,6 @@ public class DatabaseConnector {
 	    	} else if (choice == 8){
 	    		break;
 	    	}
-	    		
-	    	
 	    }
 	    
 	    
@@ -84,21 +83,15 @@ public class DatabaseConnector {
                 password);
 		
 		PreparedStatement upd = con.prepareStatement("blah blah blah",ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-		String sql = "SELECT purpose, money, name FROM Balances bal, Business bus WHERE bal.businessID = %d AND bus.businessID =  %d AND bus.name = '%s'";
-		System.out.println("What business would you like to check?");
-		String busName = in.nextLine();
-		String sql2 = "SELECT businessID, name FROM Business WHERE name = '%s'";
-		sql2 = String.format(sql2, busName);
-		ResultSet rs = upd.executeQuery(sql2);
-		rs.first();
-		int busID = rs.getInt("businessID");
-		sql = String.format(sql, busID, busID, busName);
+		String sql = "SELECT purpose, money, name FROM Balances, Business WHERE Balances.businessID = Business.businessID AND Business.accountID = %d";
+		sql = String.format(sql, accId);
 		ResultSet rs2 = upd.executeQuery(sql);
 		rs2.beforeFirst();
 		while(rs2.next()) {
 	    	double mon = rs2.getDouble("money");
+	    	String Business = rs2.getString("name");
 	    	String purpose = rs2.getString("purpose");
-	    	System.out.println(purpose + " : " + mon);
+	    	System.out.println(Business + " : " + purpose + " : " + mon);
     	}
 		
 	}
@@ -171,7 +164,7 @@ public class DatabaseConnector {
 		
 	}
 
-	public static int menu() {
+	public static int menu() { //displays to the user what options they have.
 		Scanner in = new Scanner(System.in);
 		System.out.println("What would you like to do?");
 		System.out.println("1. Check Account Balances");

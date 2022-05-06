@@ -157,7 +157,7 @@ public class DatabaseConnector {
                 password);
 		Statement upd = con.createStatement();
 		String sql = "INSERT INTO Business (accountID, name) VALUES (%d, '%s');";
-		System.out.println("What would you like to name this business?");
+		System.out.println("What would you like to name this business? (one word)");
 		String bName = in.nextLine();
 		sql = String.format(sql, accId, bName);
 		upd.executeUpdate(sql);
@@ -209,7 +209,7 @@ public class DatabaseConnector {
 		//TODO Auto-generated catch block
 		Statement upd = con.createStatement();
     	String sql1 = " INSERT INTO Balances (accountID, purpose, dangerZone, money) VALUES (%d, '%s', '%s', %f)";
-    	System.out.println("What is the purpose of this balance?");
+    	System.out.println("What is the purpose of this balance? (one word)");
     	String purpose = in.next();
     	System.out.println("How low can this balance go?");
     	String dangerZone = in.next();
@@ -232,7 +232,7 @@ public class DatabaseConnector {
     	String sql2 = "Select money, balanceID FROM Balances WHERE purpose = '%s' and accountID = %d";
     	System.out.println("what balance is this transaction for?");
     	String balanceName = in.next();
-    	System.out.println("What is the purpose of this transaction?");
+    	System.out.println("What is the purpose of this transaction? (one word)");
     	String purpose = in.next();
     	System.out.println("will this be a deposit or a withdrawl (enter + or -)");
     	String sign = in.next();
